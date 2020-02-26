@@ -41,9 +41,7 @@ class Queue:
 
         if self.size == 0:
             return 0
-
         else:
-            
             while current_node is not None:
                 length += 1
                 current_node = current_node.next

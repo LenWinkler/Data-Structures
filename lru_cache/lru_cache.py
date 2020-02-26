@@ -1,3 +1,5 @@
+from doubly_linked_list import DoublyLinkedList
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +9,10 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.nodes_in_cache = 0
+        self.dll = DoublyLinkedList()
+        self.cache = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +22,28 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        # check if key in cache
+        if key not in self.cache:
+
+            # if not, return None
+            return None
+
+        # if it is
+        else:
+            # create variables
+            curr_node = self.dll.head
+            value = None
+
+            # search linked list for key:value and move them to front of dll
+            while curr_node is not None:
+                if curr_node.value == key:
+                    self.dll.move_to_front(curr_node)
+                    value = self.cache[key]
+                else:
+                    curr_node = curr_node.next
+
+            # return value
+            return value
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -30,4 +56,34 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        # create variables
+        curr_node = self.dll.head
+
+        # if key already exists in cache, overwrite value with the new value
+        if key in self.cache:
+            print('before', self.cache[key])
+            self.cache[key] = value
+            print('after', self.cache[key])
+
+            # search for corresponding node and move it to front of dll
+            while curr_node is not None:
+                if curr_node.value == key:
+                    self.dll.move_to_front(curr_node)
+                else:
+                    curr_node = curr_node.next
+        
+        else:
+        # if key doesn't exist, check if nodes_in_cache == limit
+            if self.nodes_in_cache == self.limit:
+                print('if nodes == limit')
+                # if it is remove lru, add key to head of dll, add key:value to cache
+                self.dll.remove_from_tail()
+                self.dll.add_to_head(key)
+                self.cache[key] = value
+
+        # if it isn't, add key to head of dll and add key:value to cache
+            else:
+                self.dll.add_to_head(key)
+                self.cache[key] = value
+                self.nodes_in_cache += 1
+                print('add', self.cache)
