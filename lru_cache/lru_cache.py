@@ -39,6 +39,7 @@ class LRUCache:
                 if curr_node.value == key:
                     self.dll.move_to_front(curr_node)
                     value = self.cache[key]
+                    break
                 else:
                     curr_node = curr_node.next
 
@@ -56,12 +57,13 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
+        print('asdf')
         # create variables
         curr_node = self.dll.head
 
         # if key already exists in cache, overwrite value with the new value
         if key in self.cache:
-            print('before', self.cache[key])
+            print('before')
             self.cache[key] = value
             print('after', self.cache[key])
 
@@ -69,13 +71,14 @@ class LRUCache:
             while curr_node is not None:
                 if curr_node.value == key:
                     self.dll.move_to_front(curr_node)
+                    break
                 else:
                     curr_node = curr_node.next
         
         else:
         # if key doesn't exist, check if nodes_in_cache == limit
             if self.nodes_in_cache == self.limit:
-                print('if nodes == limit')
+                
                 # if it is remove lru, add key to head of dll, add key:value to cache
                 self.dll.remove_from_tail()
                 self.dll.add_to_head(key)
