@@ -51,7 +51,6 @@ class BinarySearchTree:
         # if value == root, return true
         if target == self.value:
             return True
-
         # if smaller, go left
         elif target < self.value:
             if self.left:
@@ -66,41 +65,21 @@ class BinarySearchTree:
 
     # Return the maximum value found in the tree
     def get_max(self):
-
-        # var for current node
-        current_node = self
-        max_val = None
-        # while you can go right, go right
-        if current_node.right is not None:
-            current_node = current_node.right
-            current_node.get_max()
-        # if no right child, return this value
+        if not self.right:
+            return self.value
         else:
-            max_val = current_node.value
-
-        return max_val
+            return self.right.get_max()
+        
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        # vars for current
-        current_node = self
-        current_left = None
-        current_right = None
-        # call cb on current node
-        cb(current_node)
-        # if left, call it on left
-        if current_node.left is not None:
-            current_left = self.left
-            current_left.for_each(cb)
-        elif current_node.left is None:
-            pass
-        # if right call it on right
-        if current_node.right is not None:
-            current_right = self.right
-            current_right.for_each(cb)
-        elif current_node.right is None:
-            pass
+        cb(self.value)
+
+        if self.left:
+            self.left.for_each(cb)
+        if self.right:
+            self.right.for_each(cb)
         
 
     # DAY 2 Project -----------------------
@@ -118,7 +97,23 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+
+        # initialize a stack
+        stack = Stack()
+        # push root to stack
+        stack.push(node)
+        # while stack not empty
+        while stack.len() > 0:
+            # pop top item out of stack into temp
+            temp = stack.pop()
+            # DO THE THING!!!!!!
+            print(temp.value)
+            # if temp has right right put into stack
+            if temp.right:
+                stack.push(temp.right)
+            # if temp has left left put into stack
+            if temp.left:
+                stack.push(temp.left)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
