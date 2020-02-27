@@ -46,28 +46,23 @@ class BinarySearchTree:
     # False if it does not
     def contains(self, target):
         # var for current node
-        current_node = self
-        result = False
 
         # compare value to root
         # if value == root, return true
-        if target == current_node.value:
-            result = True
-            return
-        # if no more available nodes, return false
-        elif current_node.value is None or current_node.left is None and current_node.right is None:
-            result = False
+        if target == self.value:
+            return True
+
         # if smaller, go left
-        elif target < current_node.value:
-            current_node = self.left
-            current_node.contains(target)
+        elif target < self.value:
+            if self.left:
+                return self.left.contains(target)
         # if greater or equal, go right
-        elif target > current_node.value:
-            current_node = self.right
-            current_node.contains(target)
+        elif target > self.value:
+            if self.right:
+                return self.right.contains(target)
         # repeat previous two steps until value matches (True)
         # or the next appropriate node == None
-        return result
+        
 
     # Return the maximum value found in the tree
     def get_max(self):
