@@ -57,15 +57,12 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        print('asdf')
+        
         # create variables
         curr_node = self.dll.head
-
         # if key already exists in cache, overwrite value with the new value
         if key in self.cache:
-            print('before')
             self.cache[key] = value
-            print('after', self.cache[key])
 
             # search for corresponding node and move it to front of dll
             while curr_node is not None:
@@ -78,7 +75,6 @@ class LRUCache:
         else:
         # if key doesn't exist, check if nodes_in_cache == limit
             if self.nodes_in_cache == self.limit:
-                
                 # if it is remove lru, add key to head of dll, add key:value to cache
                 self.dll.remove_from_tail()
                 self.dll.add_to_head(key)
@@ -89,4 +85,3 @@ class LRUCache:
                 self.dll.add_to_head(key)
                 self.cache[key] = value
                 self.nodes_in_cache += 1
-                print('add', self.cache)
