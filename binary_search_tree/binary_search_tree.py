@@ -45,24 +45,68 @@ class BinarySearchTree:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
-        # if no root:
-            # return False
-        # else compare value to root
-        # if smaller, go left
-        # if greater or equal, go right
+        # var for current node
+        current_node = self
+        result = False
 
+        # compare value to root
+        # if value == root, return true
+        if target == current_node.value:
+            result = True
+            return
+        # if no more available nodes, return false
+        elif current_node.value is None or current_node.left is None and current_node.right is None:
+            result = False
+        # if smaller, go left
+        elif target < current_node.value:
+            current_node = self.left
+            current_node.contains(target)
+        # if greater or equal, go right
+        elif target > current_node.value:
+            current_node = self.right
+            current_node.contains(target)
+        # repeat previous two steps until value matches (True)
+        # or the next appropriate node == None
+        return result
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+
+        # var for current node
+        current_node = self
+        max_val = None
         # while you can go right, go right
+        if current_node.right is not None:
+            current_node = current_node.right
+            current_node.get_max()
         # if no right child, return this value
+        else:
+            max_val = current_node.value
+
+        return max_val
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        # vars for current
+        current_node = self
+        current_left = None
+        current_right = None
+        # call cb on current node
+        cb(current_node)
+        # if left, call it on left
+        if current_node.left is not None:
+            current_left = self.left
+            current_left.for_each(cb)
+        elif current_node.left is None:
+            pass
+        # if right call it on right
+        if current_node.right is not None:
+            current_right = self.right
+            current_right.for_each(cb)
+        elif current_node.right is None:
+            pass
+        
 
     # DAY 2 Project -----------------------
 
